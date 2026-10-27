@@ -1,0 +1,10 @@
+{
+  "name": "agentops-web",
+  "version": "0.1.0",
+  "description": "AgentOps 로컬 웹 관제 서버 (무의존, 127.0.0.1 전용)",
+  "type": "module",
+  "scripts": {
+    "start": "node server/server.js",
+    "gen-launchd": "node bin/gen-launchd.js"
+  }
+}

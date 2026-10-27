@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AgentOps 관제 · Live</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="mast">
+    <h1>🧭 AgentOps 관제 <span class="live">LIVE</span></h1>
+    <span id="mast-date" class="mut"></span>
+    <span id="mast-tally" class="tally"></span>
+  </header>
+
+  <nav class="tabs" id="tabs">
+    <button data-tab="today" class="on">오늘</button>
+    <button data-tab="needs">결정 <span id="needs-badge" class="badge"></span></button>
+    <button data-tab="staff">직원</button>
+    <button data-tab="run">실행·작업</button>
+    <button data-tab="cal">일정</button>
+    <button data-tab="ask">질의</button>
+  </nav>
+
+  <section id="tab-today" class="panel"></section>
+  <section id="tab-needs" class="panel" hidden></section>
+  <section id="tab-staff" class="panel" hidden></section>
+  <section id="tab-run" class="panel" hidden></section>
+  <section id="tab-cal" class="panel" hidden></section>
+  <section id="tab-ask" class="panel" hidden>
+    <div class="card">
+      <h2>즉시 질의 (엔진 선택)</h2>
+      <div class="row">
+        <select id="ask-engine">
+          <option value="claude">Claude (기본·판단)</option>
+          <option value="hermes">hermes (로컬·민감 데이터)</option>
+          <option value="openai">OpenAI (코드)</option>
+          <option value="gemini">Gemini (공개 문헌 전용)</option>
+        </select>
+      </div>
+      <textarea id="ask-text" rows="4" placeholder="예: 오늘 핸드오프 요약해줘 / 이 스크립트 리팩토링 방향 제안"></textarea>
+      <div class="row">
+        <button id="ask-send" class="primary">보내기</button>
+        <span id="ask-msg" class="mut"></span>
+      </div>
+      <pre id="ask-log" class="joblog" hidden></pre>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <span>agentops-web · 127.0.0.1 전용 · 원장은 읽기 전용(결정 억제 키만 기록)</span>
+    <span id="foot-ts"></span>
+  </footer>
+</div>
+<script src="/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+{
+  "_doc": "관제 서버 설정. 이 파일을 config.json 으로 복사해 경로만 자기 것으로 바꾼다. API 키는 절대 여기 넣지 않는다(OS 키체인 사용, bin/setup-keys.sh 참조).",
+
+  "port": 8787,
+  "bind": "127.0.0.1",
+
+  "home": "/Users/<YOU>/AgentOps",
+  "agentops": "/Users/<YOU>/AgentOps",
+  "agentsMd": "/Users/<YOU>/AgentOps/AGENTS.md",
+  "scheduledTasksDir": "/Users/<YOU>/.claude/scheduled-tasks",
+
+  "engines": {
+    "claude": {
+      "cmd": "/opt/homebrew/bin/claude",
+      "cwd": "/Users/<YOU>/AgentOps",
+      "timeoutMin": 120,
+      "retryOnCrash": 1,
+      "_doc": "구독 헤드리스(claude -p). 루틴·결정 처리·질의의 기본 엔진. cwd가 루틴 홈이어야 그 폴더의 권한 allow 규칙이 적용된다."
+    },
+    "hermes": {
+      "taskScript": "",
+      "sendCli": "",
+      "_doc": "선택. 로컬 LLM 워커(민감 데이터·대량 배치) + 알림 발신. 비워 두면 이 레인은 비활성."
+    },
+    "openai": {
+      "keychainService": "agentops-openai",
+      "endpoint": "https://api.openai.com/v1/responses",
+      "model": "<모델명>",
+      "timeoutSec": 300,
+      "lane": "code",
+      "_doc": "선택. 코드 유지보수 레인. 기밀 데이터 투입 금지."
+    },
+    "gemini": {
+      "keychainService": "agentops-gemini",
+      "endpoint": "https://generativelanguage.googleapis.com/v1beta",
+      "model": "<모델명>",
+      "timeoutSec": 300,
+      "lane": "public-lit-only",
+      "_doc": "선택. 공개 자료 대량 스크리닝 전용 레인. dispatcher.js에 데이터 경계 가드가 걸려 있다."
+    }
+  },
+
+  "discord": {
+    "enabled": false,
+    "target": "discord:#general",
+    "notifyOn": ["job_fail", "routine_missing", "decision_processed"],
+    "_doc": "선택. 발신 CLI(engines.hermes.sendCli)를 경유한다. enabled=false면 알림 없이 로그만 남는다."
+  },
+
+  "needsWindowDays": 8,
+  "jobLogDir": "/Users/<YOU>/agentops-web/logs/jobs",
+  "queueDir": "/Users/<YOU>/agentops-web/queue"
+}
